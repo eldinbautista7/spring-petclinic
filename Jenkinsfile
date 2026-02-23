@@ -1,14 +1,13 @@
 pipeline {
     agent any
 
-    // Trigger: every 5 minutes on Mondays
     triggers {
         cron('H/5 * * * 1')
     }
 
     tools {
-        maven 'Maven3' // The name you set in Jenkins Global Tool Configuration
-        jdk 'Java17'   // Make sure your Jenkins JDK is configured
+        jdk 'Java25'
+        maven 'Maven3'
     }
 
     stages {
