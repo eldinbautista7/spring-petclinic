@@ -1,23 +1,28 @@
 pipeline {
     agent any
 
-    // Trigger: every 5 minutes on Mondays
     triggers {
         cron('H/5 * * * 1')
+    }
+
+    tools {
+        jdk 'Java25'
+        maven 'Maven3'
     }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building the Spring PetClinic project...'
-                bat 'mvn clean package'
+                // Use the full path from Jenkins tool
+                bat "\"${tool 'Maven3'}\\bin\\mvn\" clean package"
             }
         }
 
         stage('Run Tests with JaCoCo') {
             steps {
                 echo 'Generating JaCoCo coverage report...'
-                bat 'mvn test jacoco:report'
+                bat "\"${tool 'Maven3'}\\bin\\mvn\" test jacoco:report"
             }
         }
 
